@@ -1,0 +1,48 @@
+@extends('humo::xml')
+@section('body')
+    <SOAP-ENV:Body>
+        <ebppif1:Payment>
+            {{--<language>en</language>--}}
+            <billerRef>SOAP_TOCARD_2</billerRef>
+            <payinstrRef>SOAP_TOCARD_2</payinstrRef>
+            <sessionID>SOAP_TOCARD_2-{{$credit->getPaymentRef()}}</sessionID>
+            <paymentRef>{{$credit->getPaymentRef()}}</paymentRef>
+            <details>
+                <item>
+                    <name>pan2</name>
+                    <value>{{$credit->pan}}</value>
+                </item>
+                <item>
+                    <name>expiry</name>
+                    <value>{{$credit->expiry}}</value>
+                </item>
+                <item>
+                    <name>ccy_code</name>
+                    <value>{{$credit->ccy_code}}</value>
+                </item>
+                <item>
+                    <name>amount</name>
+                    <value>{{$credit->amount}}</value>
+                </item>
+                <item>
+                    <name>merchant_id</name>
+                    <value>{{$credit->merchant_id}}</value>
+                </item>
+                <item>
+                    <name>terminal_id</name>
+                    <value>{{$credit->terminal_id}}</value>
+                </item>
+                <item>
+                    <name>point_code</name>
+                    <value>{{ $point_code ?? '100010104110'}}</value>
+                </item>
+                <item>
+                    <name>centre_id</name>
+                    <value>{{$centre_id}}</value>
+                </item>
+                {{ $owner_data ?? '' }}
+            </details>
+            <paymentOriginator>{{$originator}}</paymentOriginator>
+        </ebppif1:Payment>
+    </SOAP-ENV:Body>
+@endsection

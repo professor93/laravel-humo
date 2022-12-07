@@ -1,0 +1,47 @@
+@extends('humo::xml')
+@section('body')
+    <SOAP-ENV:Header/>
+    <SOAP-ENV:Body>
+        <ebppif1:Payment>
+            <billerRef>SOAP_SMS</billerRef>
+            <payinstrRef>SOAP_SMS</payinstrRef>
+            <sessionID>{{$session_id}}</sessionID>
+            <paymentRef>{{$session_id}}</paymentRef>
+            <details>
+                <item>
+                    <name>pan</name>
+                    <value>{{$pan}}</value>
+                </item>
+                <item>
+                    <name>expiry</name>
+                    <value>{{$expiry}}</value>
+                </item>
+                <item>
+                    <name>ccy_code</name>
+                    <value>860</value>
+                </item>
+                <item>
+                    <name>amount</name>
+                    <value>{{$amount}}</value>
+                </item>
+                <item>
+                    <name>merchant_id</name>
+                    <value>{{$merchant_id}}</value>
+                </item>
+                <item>
+                    <name>terminal_id</name>
+                    <value>{{$terminal_id}}</value>
+                </item>
+                <item>
+                    <name>point_code</name>
+                    <value>100001104110</value>
+                </item>
+                <item>
+                    <name>centre_id</name>
+                    <value>{{$centre_id}}</value>
+                </item>
+            </details>
+            <paymentOriginator>{{$originator}}</paymentOriginator>
+        </ebppif1:Payment>
+    </SOAP-ENV:Body>
+@endsection

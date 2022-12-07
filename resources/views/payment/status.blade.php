@@ -1,0 +1,14 @@
+@extends('humo::xml')
+@section('body')
+    <SOAP-ENV:Body>
+        <ebppif1:GetPayment>
+            @if(isset($payment_id))
+                <paymentID>{{$payment_id}}</paymentID>
+            @else
+                <paymentRef>{{$payment_ref}}</paymentRef>
+            @endif
+            <sessionID/>
+            <paymentOriginator>{{$originator}}</paymentOriginator>
+        </ebppif1:GetPayment>
+    </SOAP-ENV:Body>
+@endsection

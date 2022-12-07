@@ -1,0 +1,12 @@
+@include('humo::header')
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:urn="urn:AccessGateway">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <urn:export>
+            <cardholderID>{{$holder_id}}-{{$bank_id}}</cardholderID>
+            <bankId>MB_STD</bankId>
+        </urn:export>
+    </soapenv:Body>
+</soapenv:Envelope>

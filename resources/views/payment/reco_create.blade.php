@@ -1,0 +1,19 @@
+@extends('humo::xml')
+@section('body')
+    <SOAP-ENV:Body>
+        <ebppif1:Payment>
+            <billerRef>SOAP_RECO</billerRef>
+            <payinstrRef>SOAP_RECO</payinstrRef>
+            @isset($payment_ref)
+                <paymentRef>{{$payment_ref}}</paymentRef>
+            @endisset
+            <details>
+                <item>
+                    <name>terminal_id</name>
+                    <value>{{$terminal_id}}</value>
+                </item>
+            </details>
+            <paymentOriginator>{{$originator}}</paymentOriginator>
+        </ebppif1:Payment>
+    </SOAP-ENV:Body>
+@endsection

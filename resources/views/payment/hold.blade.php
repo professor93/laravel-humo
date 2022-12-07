@@ -1,0 +1,47 @@
+@extends('humo::xml')
+@section('body')
+    <SOAP-ENV:Body>
+        <ebppif1:Payment>
+            <language>en</language>
+            <billerRef>SOAP_DMS</billerRef>
+            <payinstrRef>SOAP_DMS</payinstrRef>
+            <sessionID>SOAP_DMS-{{$hold->getPaymentRef()}}</sessionID>
+            <paymentRef>{{$hold->getPaymentRef()}}</paymentRef>
+            <details>
+                <item>
+                    <name>pan</name>
+                    <value>{{$hold->pan}}</value>
+                </item>
+                <item>
+                    <name>expiry</name>
+                    <value>{{$hold->expiry}}</value>
+                </item>
+                <item>
+                    <name>ccy_code</name>
+                    <value>{{$hold->ccy_code}}</value>
+                </item>
+                <item>
+                    <name>amount</name>
+                    <value>{{$hold->amount}}</value>
+                </item>
+                <item>
+                    <name>merchant_id</name>
+                    <value>{{$hold->merchant_id}}</value>
+                </item>
+                <item>
+                    <name>terminal_id</name>
+                    <value>{{$hold->terminal_id}}</value>
+                </item>
+                <item>
+                    <name>point_code</name>
+                    <value>{{ $point_code ?? '100010104110'}}</value>
+                </item>
+                <item>
+                    <name>centre_id</name>
+                    <value>{{$centre_id}}</value>
+                </item>
+            </details>
+            <paymentOriginator>{{$originator}}</paymentOriginator>
+        </ebppif1:Payment>
+    </SOAP-ENV:Body>
+@endsection
