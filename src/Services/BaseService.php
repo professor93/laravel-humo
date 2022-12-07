@@ -18,11 +18,9 @@ class BaseService
     use Macroable;
 
     public string|null $session_id = null;
-    protected mixed $config;
 
     public function __construct(protected readonly PendingRequest $client)
     {
-        $this->config = config('humo');
     }
 
     public function getSessionID(): string
@@ -42,17 +40,6 @@ class BaseService
         }
 
         return $session_id;
-    }
-
-    public function sendOldXmlRequest(string $url_type, string $xml, string $session_id, string $method = '')
-    {
-        return Http::withHeaders(['Content-Type' => 'application/xml', 'Accept' => '*/*', 'SOAPAction' => '""', 'X-Request-Method' => $method])
-            ->withBasicAuth($this->config['username'], $this->config['password'])
-            ->post($this->getBaseUrls()[$url_type], [
-                'body' => $xml])
-            ->throw(function ($response, $e) {
-                throw new Exception($response->getBody()->getContents(), $response->status());
-            })->json();
     }
 
     protected function sendXmlRequest($method, $body): array

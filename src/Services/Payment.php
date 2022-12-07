@@ -48,7 +48,7 @@ class Payment extends BaseService
 
     public function credit(CreditDTO $credit): Credit
     {
-        $credit->checkPassportlessLimit($this->config['max_amount_without_passport']);
+        $credit->checkPassportlessLimit(config('humo.max_amount_without_passport'));
 
         $xml = view('humo::payment.credit', compact('credit'))->render();
 
