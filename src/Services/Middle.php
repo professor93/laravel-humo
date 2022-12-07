@@ -8,7 +8,6 @@ use Uzbek\LaravelHumo\Dtos\Middle\Dto;
 use Uzbek\LaravelHumo\Dtos\Middle\PhoneDto;
 use Uzbek\LaravelHumo\Dtos\Middle\Request\ChangePhoneRequest;
 use Uzbek\LaravelHumo\Dtos\Middle\Request\CustomerActivateRequest;
-use Uzbek\LaravelHumo\Dtos\Middle\Request\RemoveCardRequest;
 use Uzbek\LaravelHumo\Dtos\Middle\Request\ScoringRequest;
 use Uzbek\LaravelHumo\Dtos\Middle\Request\TransactionHistoryRequest;
 
@@ -34,8 +33,9 @@ class Middle extends BaseService
         return $this->sendRequest('/v2/mb/customer/activate', new CustomerActivateRequest(new CardDto($pan), new PhoneDto($phone)));
     }
 
-    public function customer(string $customerId, string $bankId = 'MB_STD')
+    public function customer(string $customerId, string|null $bankId = null)
     {
+        $bankId ??= 'MB_STD';
         return $this->sendRequest('/v2/mb/customer', compact('customerId', 'bankId'));
     }
 
