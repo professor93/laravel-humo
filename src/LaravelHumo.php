@@ -13,7 +13,7 @@ class LaravelHumo
     private Payment|null $_payment = null;
 
 
-    public function __construct(private readonly array $config)
+    public function __construct()
     {
         $this->xml_client = Http::withHeaders(['SOAPAction' => '""'])
             ->withBasicAuth(config('humo.username'), config('humo.password'))
