@@ -12,6 +12,8 @@ return [
     'username' => env('HUMO_USERNAME', 'aab'),
     'password' => env('HUMO_PASSWORD', '1234'),
     'token' => env('HUMO_TOKEN'),
+    'centre_id' => env('HUMO_CENTRE_ID', 'HUMO'),
+    'point_code' => env('HUMO_POINT_CODE', '100010104110'),
     'max_amount_without_passport' => env('HUMO_MAX_AMOUNT_WITHOUT_PASSPORT', 11_999_999_99), // Passport information is required from 12 million UZS
     'proxy_url' => env('HUMO_PROXY_URL'),
     'proxy_proto' => env('HUMO_PROXY_PROTO'),

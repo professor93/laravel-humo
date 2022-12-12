@@ -3,6 +3,7 @@
 namespace Uzbek\LaravelHumo\Services;
 
 use DateTime;
+use Exception;
 use Uzbek\LaravelHumo\Dtos\Middle\CardDto;
 use Uzbek\LaravelHumo\Dtos\Middle\Dto;
 use Uzbek\LaravelHumo\Dtos\Middle\PhoneDto;
@@ -10,12 +11,17 @@ use Uzbek\LaravelHumo\Dtos\Middle\Request\ChangePhoneRequest;
 use Uzbek\LaravelHumo\Dtos\Middle\Request\CustomerActivateRequest;
 use Uzbek\LaravelHumo\Dtos\Middle\Request\ScoringRequest;
 use Uzbek\LaravelHumo\Dtos\Middle\Request\TransactionHistoryRequest;
+use Uzbek\LaravelHumo\Response\Middle\CardInfo;
 
 class Middle extends BaseService
 {
     public function cardInfo($primaryAccountNumber, $mb_flag = true)
     {
-        return $this->sendRequest('/v3/iiacs/card', compact('primaryAccountNumber', 'mb_flag'));
+        $resp = $this->sendRequest('/v3/iiacs/card', compact('primaryAccountNumber', 'mb_flag'));
+        if (isset($resp['result'])) {
+            return CardInfo::from($resp['result']);
+        }
+        throw new Exception('Card not found. [1256]', 1256);
     }
 
     private function sendRequest($url, $params)

@@ -14,12 +14,14 @@ class LaravelHumoServiceProvider extends PackageServiceProvider
          * This class is a Package Service Provider
          */
         $package->name('laravel-humo')->hasConfigFile('humo')->hasViews('humo');
+        $this->app->singleton(LaravelHumo::class, static fn() => new LaravelHumo());
     }
 
     public function packageRegistered()
     {
-        $this->app->singleton(LaravelHumo::class, static fn() => new LaravelHumo(config('humo')));
         $this->package->sharesDataWithAllViews('originator', config('humo.username'));
+        $this->package->sharesDataWithAllViews('centre_id', config('humo.centre_id'));
+        $this->package->sharesDataWithAllViews('point_code', config('humo.point_code'));
     }
 
     public function bootingPackage()
