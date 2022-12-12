@@ -46,7 +46,7 @@ class BaseService
         /** @var array $response */
         $response = $this->client
             ->withBody($body, 'application/xml')
-            ->withHeaders(['X-Request-Method' => $method])
+            ->xMethod($method)
             ->post('/')->xml();
 
         return $response;
@@ -58,7 +58,8 @@ class BaseService
     {
         return $this->client
             ->withBody($body, 'application/json')
-            ->withHeaders(['X-Request-Method' => $method])
+            ->xMethod($method)
+//            ->withHeaders(['X-Request-Method' => $method])
             ->post('');
     }
 }

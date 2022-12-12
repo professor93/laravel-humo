@@ -2,6 +2,7 @@
 
 namespace Uzbek\LaravelHumo;
 
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -26,6 +27,11 @@ class LaravelHumoServiceProvider extends PackageServiceProvider
 
     public function bootingPackage()
     {
+        PendingRequest::macro('xMethod', function (string $method) {
+            $this->options['headers']['X-Request-Method'] = $method;
+            return $this;
+        });
+
         Response::macro('xml', function () {
             $body = $this->body();
             $body = str_ireplace(['soap-env:', 'ag:', 'iiacs:', 'soapenv:', 'ns1:', 'ebppif1:'], '', mb_convert_encoding($body, 'UTF-8', 'UTF-8'));
