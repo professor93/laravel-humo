@@ -7,7 +7,7 @@
 namespace Uzbek\LaravelHumo\Services;
 
 use Uzbek\LaravelHumo\Dtos\Payment\{P2PCreateDTO};
-use Uzbek\LaravelHumo\Response\P2P\{Create};
+use Uzbek\LaravelHumo\Response\P2P\Create;
 use Uzbek\LaravelHumo\Response\P2P\Confirm;
 
 class P2p extends BaseService

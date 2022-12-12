@@ -4,13 +4,14 @@ namespace Uzbek\LaravelHumo;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
-use Uzbek\LaravelHumo\Services\{Card, Middle, Payment};
+use Uzbek\LaravelHumo\Services\{Card, Middle, P2p, Payment};
 
 class LaravelHumo
 {
     private PendingRequest $xml_client;
     private Middle|null $_middle = null;
     private Payment|null $_payment = null;
+    private P2p|null $_p2p = null;
 
 
     public function __construct()
@@ -42,6 +43,14 @@ class LaravelHumo
             $this->_payment = new Payment($this->xml_client->baseUrl(config('humo.base_urls.payment')));
         }
         return $this->_payment;
+    }
+
+    public function p2p(): P2p
+    {
+        if ($this->_p2p === null) {
+            $this->_p2p = new P2p($this->xml_client->baseUrl(config('humo.base_urls.payment')));
+        }
+        return $this->_p2p;
     }
 
     public function middle(): Middle
