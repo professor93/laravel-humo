@@ -18,6 +18,7 @@
     "require": {
         "php": "^8.1",
         "ext-simplexml": "*",
+        "bilfeldt/laravel-http-client-logger": "^1.2",
         "illuminate/contracts": "^9.0",
         "spatie/laravel-data": "^2.0",
         "spatie/laravel-package-tools": "^1.13"

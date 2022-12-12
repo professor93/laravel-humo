@@ -15,7 +15,7 @@ class LaravelHumo
 
     public function __construct()
     {
-        $this->xml_client = Http::withHeaders(['SOAPAction' => '""'])
+        $this->xml_client = Http::log()->withHeaders(['SOAPAction' => '""'])
             ->withBasicAuth(config('humo.username'), config('humo.password'))
             ->contentType('application/xml')
             ->accept('*/*');
@@ -47,7 +47,7 @@ class LaravelHumo
     public function middle(): Middle
     {
         if ($this->_middle === null) {
-            $this->_middle = new Middle(Http::baseUrl(config('humo.base_urls.json_info'))
+            $this->_middle = new Middle(Http::log()->baseUrl(config('humo.base_urls.json_info'))
                 ->contentType('application/json; charset=utf-8')
                 ->withToken(config('humo.token')));
         }

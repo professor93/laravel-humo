@@ -9,25 +9,24 @@ namespace Uzbek\LaravelHumo\Services;
 use Uzbek\LaravelHumo\Dtos\Payment\{CreditDTO, PaymentHoldDTO};
 use Uzbek\LaravelHumo\Exceptions\{HumoException};
 use Uzbek\LaravelHumo\Response\BaseResponse;
-use Uzbek\LaravelHumo\Response\P2P\{Confirm as P2pConfirm, Create as P2pCreate};
-use Uzbek\LaravelHumo\Response\Payment\{Cancel, Credit, PaymentReturn, RecoConfirm, RecoCreate};
+use Uzbek\LaravelHumo\Response\Payment\{Cancel, Confirm, Credit, Hold, PaymentReturn, RecoConfirm, RecoCreate};
 
 class Payment extends BaseService
 {
-    public function hold(PaymentHoldDTO $hold): P2pCreate
+    public function hold(PaymentHoldDTO $hold): Hold
     {
         $xml = view('humo::payment.hold', compact('hold'))->render();
 
-        return new P2pCreate($this->sendXmlRequest('payment.create', $xml));
+        return new Hold($this->sendXmlRequest('payment.create', $xml));
     }
 
-    public function confirm(string|null $payment_id = null, string|null $payment_ref = null): P2pConfirm
+    public function confirm(string|null $payment_id = null, string|null $payment_ref = null): Confirm
     {
         throw_if(empty($payment_id . $payment_ref), new HumoException(message: 'Payment ID or Payment Ref is required'));
 
         $xml = view('humo::payment.confirm', compact('payment_id', 'payment_ref'))->render();
 
-        return new P2pConfirm($this->sendXmlRequest('payment.confirm', $xml));
+        return new Confirm($this->sendXmlRequest('payment.confirm', $xml));
     }
 
     public function cancel(string $session_id, string|null $payment_id = null, string|null $payment_ref = null): Cancel
