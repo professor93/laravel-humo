@@ -15,7 +15,7 @@ use Uzbek\LaravelHumo\Response\Middle\CardInfo;
 
 class Middle extends BaseService
 {
-    public function cardInfo($primaryAccountNumber, $mb_flag = true)
+    public function cardInfo($primaryAccountNumber, $mb_flag = true): CardInfo
     {
         $resp = $this->sendRequest('/v3/iiacs/card', compact('primaryAccountNumber', 'mb_flag'));
         if (isset($resp['result'])) {

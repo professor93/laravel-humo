@@ -29,7 +29,9 @@ class LaravelHumoServiceProvider extends PackageServiceProvider
         Response::macro('xml', function () {
             $body = $this->body();
             $body = str_ireplace(['soap-env:', 'ag:', 'iiacs:', 'soapenv:', 'ns1:', 'ebppif1:'], '', mb_convert_encoding($body, 'UTF-8', 'UTF-8'));
-            return simplexml_load_string($body);
+            $xml = simplexml_load_string($body);
+            $json = json_encode($xml);
+            return json_decode($json, true);
         });
     }
 }
