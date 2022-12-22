@@ -78,15 +78,15 @@ class Payment extends BaseService
     public function recoCreate(string $terminal_id, string $payment_ref): RecoCreate
     {
         $xml = view('humo::payment.reco_create', compact('payment_ref', 'terminal_id'))->renderMin();
-
-        return new RecoCreate($this->sendXmlRequest('reco.create', $xml));
+        $resp = $this->sendXmlRequest('reco.create', $xml)['Body']['PaymentResponse'] ?? [];
+        return RecoCreate::from($this->pluckDetails($resp));
     }
 
     public function recoConfirm(string|null $payment_id = null, string|null $payment_ref = null): RecoConfirm
     {
         $xml = view('humo::payment.reco_confirm', compact('payment_id'))->renderMin();
-
-        return new RecoConfirm($this->sendXmlRequest('reco.confirm', $xml));
+        $resp = $this->sendXmlRequest('reco.confirm', $xml)['Body']['PaymentResponse'] ?? [];
+        return RecoConfirm::from($this->pluckDetails($resp));
     }
 
     public function status(string|null $payment_id = null, string|null $payment_ref = null): Status
