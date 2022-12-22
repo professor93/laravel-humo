@@ -6,12 +6,18 @@
 
 namespace Uzbek\LaravelHumo\Response\Payment;
 
-use Uzbek\LaravelHumo\Response\BaseResponse;
+use Spatie\LaravelData\Data;
 
-class Hold extends BaseResponse
+class Hold extends Data
 {
-    public function __construct(array $params)
+    public function __construct(
+        public string      $language,
+        public string      $switchingID,
+        public string      $autoSwitch,
+        public string      $paymentRef,
+        public string      $paymentOriginator,
+        public HoldDetails $details,
+    )
     {
-        parent::__construct($params['RequestResponse'] ?? []);
     }
 }

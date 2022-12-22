@@ -8,6 +8,7 @@ use Uzbek\LaravelHumo\Services\{Card, Middle, P2p, Payment};
 
 class LaravelHumo
 {
+    const CCY_CODE_UZS = '860';
     private PendingRequest $xml_client;
     private Middle|null $_middle = null;
     private Payment|null $_payment = null;

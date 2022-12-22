@@ -6,12 +6,19 @@
 
 namespace Uzbek\LaravelHumo\Response\Payment;
 
-class Cancel
-{
-    public bool $isOk = false;
+use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
-    public function __construct(array $params)
+class Cancel extends Data
+{
+    public function __construct(
+        public array|Optional $CancelRequestResponse,
+    )
     {
-        $this->isOk = isset($params['CancelRequestResponse']);
+    }
+
+    public function isOk(): bool
+    {
+        return is_array($this->CancelRequestResponse);
     }
 }

@@ -4,6 +4,7 @@ namespace Uzbek\LaravelHumo;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\View\View;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -20,9 +21,11 @@ class LaravelHumoServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        $this->package->sharesDataWithAllViews('originator', config('humo.username'));
-        $this->package->sharesDataWithAllViews('centre_id', config('humo.centre_id'));
-        $this->package->sharesDataWithAllViews('point_code', config('humo.point_code'));
+        $conf = config('humo');
+        $this->package->sharesDataWithAllViews('originator', $conf['username']);
+        $this->package->sharesDataWithAllViews('centre_id', $conf['centre_id']);
+        $this->package->sharesDataWithAllViews('point_code', $conf['point_code']);
+        $this->package->sharesDataWithAllViews('ccy_code', LaravelHumo::CCY_CODE_UZS);
     }
 
     public function bootingPackage()
@@ -33,11 +36,12 @@ class LaravelHumoServiceProvider extends PackageServiceProvider
         });
 
         Response::macro('xml', function () {
-            $body = $this->body();
-            $body = str_ireplace(['soap-env:', 'ag:', 'iiacs:', 'soapenv:', 'ns1:', 'ebppif1:'], '', mb_convert_encoding($body, 'UTF-8', 'UTF-8'));
-            $xml = simplexml_load_string($body);
-            $json = json_encode($xml);
-            return json_decode($json, true);
+            $body = str_ireplace(['soap-env:', 'ag:', 'iiacs:', 'soapenv:', 'ns1:', 'ebppif1:'], '', mb_convert_encoding($this->body(), 'UTF-8', 'UTF-8'));
+            return json_decode(json_encode(simplexml_load_string($body)), true);
+        });
+
+        View::macro('renderMin', function () {
+            return trim(str_replace('> <', '><', preg_replace('/\s+/', ' ', $this->render())));
         });
     }
 }

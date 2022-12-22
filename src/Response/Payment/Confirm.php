@@ -6,33 +6,16 @@
 
 namespace Uzbek\LaravelHumo\Response\Payment;
 
-use Uzbek\LaravelHumo\Response\BaseResponse;
+use Spatie\LaravelData\Data;
 
-/**
- * Class P2PConfirm
- *
- * @property-read string paymentID
- * @property-read ConfirmDetails details
- * @property-read string action
- */
-class Confirm extends BaseResponse
+class Confirm extends Data
 {
-    private ConfirmDetails|null $_details = null;
-
-    public function __construct(array $params)
+    public function __construct(
+        public string  $paymentID,
+        public string  $paymentRef,
+        public Details $details,
+        public string  $action,
+    )
     {
-        parent::__construct($params['PaymentResponse'] ?? []);
-    }
-
-    public function getDetails(): ConfirmDetails
-    {
-        if ($this->_details === null) {
-            $details = $this->getAttribute('details', []);
-            $items = $details['item'] ?? [];
-
-            $this->_details = new ConfirmDetails($this->getFormattedItems($items));
-        }
-
-        return $this->_details;
     }
 }

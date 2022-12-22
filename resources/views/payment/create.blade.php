@@ -18,7 +18,7 @@
                 </item>
                 <item>
                     <name>ccy_code</name>
-                    <value>860</value>
+                    <value>{{$credit->ccy_code ?? $ccy_code}}</value>
                 </item>
                 <item>
                     <name>amount</name>

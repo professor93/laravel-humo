@@ -25,9 +25,9 @@ class AccessGateway extends BaseService
     public function smsStatus($holder_id, $bank_id): SmsStatus
     {
         $session_id = $this->getSessionID();
-        $xml = view('humo::access_gateway.sms_status', compact('holder_id', 'bank_id'))->render();
+        $xml = view('humo::access_gateway.sms_status', compact('holder_id', 'bank_id'))->renderMin();
 
-        return new SmsStatus($this->sendXmlRequest('smsStatus', $xml)->xml());
+        return new SmsStatus($this->sendXmlRequest('smsStatus', $xml));
     }
 
     /**
@@ -47,8 +47,8 @@ class AccessGateway extends BaseService
     public function smsOn(string $holderName, string $holderID, string $card_number, string $card_expiry, string $phone): bool
     {
         $bank_c = substr($card_number, 4, 2);
-        $xml = view('humo::access_gateway.sms_on', compact('holderName', 'holderID', 'card_number', 'card_expiry', 'phone', 'bank_c'))->render();
-        $result = $this->sendXmlRequest('smsOn', $xml)->xml();
+        $xml = view('humo::access_gateway.sms_on', compact('holderName', 'holderID', 'card_number', 'card_expiry', 'phone', 'bank_c'))->renderMin();
+        $result = $this->sendXmlRequest('smsOn', $xml);
 
         if (isset($result['importResponse']) && is_array($result['importResponse'])) {
             return empty($result['importResponse']);

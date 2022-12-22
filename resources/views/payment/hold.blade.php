@@ -18,8 +18,8 @@
                 </item>
                 <item>
                     <name>ccy_code</name>
-                    <value>{{$hold->ccy_code}}</value>
-                </item>
+                    <value>{{$hold->ccy_code ?? $ccy_code}}</value>
+                </item>w
                 <item>
                     <name>amount</name>
                     <value>{{$hold->amount}}</value>

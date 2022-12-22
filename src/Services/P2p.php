@@ -6,21 +6,19 @@
 
 namespace Uzbek\LaravelHumo\Services;
 
-use Uzbek\LaravelHumo\Dtos\Payment\{P2PCreateDTO};
-use Uzbek\LaravelHumo\Response\P2P\Create;
-use Uzbek\LaravelHumo\Response\P2P\Confirm;
+use Uzbek\LaravelHumo\Dtos\Payment\P2PCreateDTO;
+use Uzbek\LaravelHumo\Response\P2P\{Confirm, Create};
+use Uzbek\LaravelHumo\Traits\PluckDetails;
 
 class P2p extends BaseService
 {
-    /**
-     * @param P2PCreateDTO $p2p
-     * @return Create
-     */
+    use PluckDetails;
+
     public function create(P2PCreateDTO $p2p): Create
     {
-        $xml = view('humo::p2p.create', compact('p2p'))->render();
-
-        return new Create($this->sendXmlRequest('payment.p2pCreate', $xml));
+        $xml = view('humo::p2p.create', compact('p2p'))->renderMin();
+        $resp = $this->sendXmlRequest('payment.p2pCreate', $xml)['Body']['RequestResponse'] ?? [];
+        return Create::from($this->pluckDetails($resp));
     }
 
     /**
@@ -30,8 +28,8 @@ class P2p extends BaseService
      */
     public function confirm(string $payment_id, string|null $payment_ref = null): Confirm
     {
-        $xml = view('humo::p2p.confirm', compact('payment_id', 'payment_ref'))->render();
-
-        return new Confirm($this->sendXmlRequest('payment.p2pConfirm', $xml));
+        $xml = view('humo::p2p.confirm', compact('payment_id', 'payment_ref'))->renderMin();
+        $resp = $this->sendXmlRequest('payment.p2pConfirm', $xml)['Body']['PaymentResponse'] ?? [];
+        return Confirm::from($this->pluckDetails($resp));
     }
 }

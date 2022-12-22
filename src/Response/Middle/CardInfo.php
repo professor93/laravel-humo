@@ -22,7 +22,7 @@ class CardInfo extends Data
 
     public function isActive(): bool
     {
-        return $this->card->isActive();
+        return $this->card->isActive() && $this->mb->state === 'on';
     }
 
     public function availableBalance(): float

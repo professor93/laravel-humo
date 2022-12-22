@@ -6,23 +6,22 @@
 
 namespace Uzbek\LaravelHumo\Response\Payment;
 
-use Uzbek\LaravelHumo\Response\BaseResponse;
+use Spatie\LaravelData\Data;
 
-/**
- * Class Server
- *
- * @property-read int|null paymentID
- * @property-read array|null details
- */
-class RecoCreate extends BaseResponse
+class RecoCreate extends Data
 {
-    public function __construct(array $params)
+    public function __construct(
+        public string            $paymentID,
+        public string            $paymentRef,
+        public string            $action,
+        public RecoCreateDetails $details,
+        public string            $status,
+    )
     {
-        parent::__construct($params['PaymentResponse'] ?? []);
     }
 
     public function isOk(): bool
     {
-        return $this->paymentID !== null;
+        return (int)$this->action === 4;
     }
 }

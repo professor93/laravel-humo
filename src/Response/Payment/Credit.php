@@ -6,26 +6,22 @@
 
 namespace Uzbek\LaravelHumo\Response\Payment;
 
-use Uzbek\LaravelHumo\Response\BaseResponse;
+use Spatie\LaravelData\Data;
 
-class Credit extends BaseResponse
+class Credit extends Data
 {
-    private Details|null $_details = null;
-
-    public function __construct(array $params)
+    public function __construct(
+        public string        $paymentID,
+        public string        $paymentRef,
+        public CreditDetails $details,
+        public string        $action,
+    )
     {
-        parent::__construct($params['PaymentResponse'] ?? []);
     }
 
-    public function getDetails(): Details
+
+    public function isOk(): bool
     {
-        if ($this->_details === null) {
-            $details = $this->getAttribute('details', []);
-            $items = $details['item'] ?? [];
-
-            $this->_details = new Details($this->getFormattedItems($items));
-        }
-
-        return $this->_details;
+        return (int)$this->action === 4;
     }
 }

@@ -6,24 +6,22 @@
 
 namespace Uzbek\LaravelHumo\Response\Payment;
 
-use Uzbek\LaravelHumo\Response\BaseResponse;
+use Spatie\LaravelData\Data;
 
-/**
- * Class RecoConfirm
- *
- * @property-read int|null payment_id
- * @property-read array|null details
- * @property-read int|null action
- */
-class RecoConfirm extends BaseResponse
+class RecoConfirm extends Data
 {
-    public function __construct(array $params)
+    public function __construct(
+        public string             $paymentID,
+        public string             $paymentRef,
+        public string             $action,
+        public RecoConfirmDetails $details,
+        public string             $status,
+    )
     {
-        parent::__construct($params['PaymentResponse'] ?? []);
     }
 
     public function isOk(): bool
     {
-        return (int) $this->action === 10;
+        return (int)$this->action === 10;
     }
 }

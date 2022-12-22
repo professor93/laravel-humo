@@ -6,12 +6,22 @@
 
 namespace Uzbek\LaravelHumo\Response\P2P;
 
-use Uzbek\LaravelHumo\Response\BaseResponse;
+use Spatie\LaravelData\Data;
 
-class Create extends BaseResponse
+class Create extends Data
 {
-    public function __construct(array $params)
+    public function __construct(
+        public string  $sessionID,
+        public string  $paymentID,
+        public string  $paymentRef,
+        public Details $details,
+        public string  $action,
+    )
     {
-        parent::__construct($params['RequestResponse'] ?? []);
+    }
+
+    public function isOk(): bool
+    {
+        return (int)$this->action === 10;
     }
 }

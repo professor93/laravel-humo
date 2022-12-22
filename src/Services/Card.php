@@ -23,8 +23,8 @@ class Card extends BaseService
      */
     public function accountBalance(string $card_number): AccountBalance
     {
-        $xml = view('humo::card.balance', compact('card_number'))->render();
-        return new AccountBalance($this->sendXmlRequest('getCardAccountsBalance', $xml)->xml());
+        $xml = view('humo::card.balance', compact('card_number'))->renderMin();
+        return new AccountBalance($this->sendXmlRequest('getCardAccountsBalance', $xml));
     }
 
     /**

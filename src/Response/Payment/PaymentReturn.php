@@ -6,12 +6,19 @@
 
 namespace Uzbek\LaravelHumo\Response\Payment;
 
-class PaymentReturn
-{
-    public bool $isOk;
+use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
-    public function __construct(array $attributes)
+class PaymentReturn extends Data
+{
+    public function __construct(
+        public array|Optional $ReturnPaymentResponse
+    )
     {
-        $this->isOk = isset($attributes['ReturnPaymentResponse']);
+    }
+
+    public function isOk(): bool
+    {
+        return is_array($this->ReturnPaymentResponse);
     }
 }
