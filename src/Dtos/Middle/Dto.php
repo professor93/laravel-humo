@@ -10,12 +10,14 @@ abstract class Dto implements Arrayable
     {
 //        $props = (new \ReflectionClass(static::class))->getProperties();
 //        return new static(...$data);
+        return new static();
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         $args = func_get_args();
         $data = count($args) > 0 ? $args[0] : $this;
+
         if ($this->canBeArray($data)) {
             $result = [];
             foreach ($data as $key => $value)
@@ -27,6 +29,6 @@ abstract class Dto implements Arrayable
 
     private function canBeArray($data): bool
     {
-        return is_array($data) || is_object($data);
+        return is_array($data) || is_object($data) || $data instanceof Arrayable;
     }
 }

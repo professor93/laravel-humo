@@ -19,7 +19,7 @@ class CreditDTO extends BaseDTO
     {
         if (!empty($ownerPassportDTO)) {
             foreach ($ownerPassportDTO->toArray() as $key => $value) {
-                $this->owner_data .= "<item><name>{$key}</name><value>{$value}</value></item>";
+                $this->owner_data .= '<item><name>' . $key . '</name><value>' . $value . '</value></item>';
             }
         }
     }

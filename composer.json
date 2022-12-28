@@ -32,11 +32,6 @@
             "Uzbek\\LaravelHumo\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Uzbek\\LaravelHumo\\Tests\\": "tests"
-        }
-    },
     "scripts": {
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi"
     },

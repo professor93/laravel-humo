@@ -7,10 +7,8 @@
 namespace Uzbek\LaravelHumo\Services;
 
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Ramsey\Uuid\Uuid;
-use Uzbek\LaravelHumo\Exceptions\Exception;
 
 class BaseService
 {
@@ -32,13 +30,7 @@ class BaseService
 
     public function getNewSessionID(): string
     {
-        try {
-            $session_id = (string)Uuid::uuid4();
-        } catch (Exception) {
-            $session_id = time() . '-' . Str::random(10);
-        }
-
-        return $session_id;
+        return (string)Uuid::uuid4();
     }
 
     protected function sendXmlRequest($method, $body): array

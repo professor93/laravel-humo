@@ -25,9 +25,6 @@ class OwnerPassportDTO
         $this->doc_type = substr($doc_type, 0, 3);
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         $arr = [

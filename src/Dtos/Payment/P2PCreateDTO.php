@@ -4,9 +4,9 @@ namespace Uzbek\LaravelHumo\Dtos\Payment;
 
 class P2PCreateDTO extends BaseDTO
 {
-    const SWITCHING_COBADGE = 77;
-    const SWITCHING_INNER = 48;
-    const SWITCHING_EXTERNAL = 50;
+    final const SWITCHING_COBADGE = 77;
+    final const SWITCHING_INNER = 48;
+    final const SWITCHING_EXTERNAL = 50;
 
     public function __construct(
         public string      $pan,

@@ -1,0 +1,21 @@
+@include('humo::header')
+<soapenv:Envelope
+    xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+    <soapenv:Body>
+        <resetPINCounter>
+            <ConnectionInfo>
+                <BANK_C>{$bank_c}</BANK_C>
+                <GROUPC>01</GROUPC>
+                <EXTERNAL_SESSION_ID>{$session_id}</EXTERNAL_SESSION_ID>
+            </ConnectionInfo>
+            <Parameters>
+                <CARD></CARD>
+                <EXPIRY>{$expire}</EXPIRY>
+                <TEXT>{$reason}</TEXT>
+                <OFFLINE>1</OFFLINE>
+            </Parameters>
+        </resetPINCounter>
+    </soapenv:Body>
+</soapenv:Envelope>
